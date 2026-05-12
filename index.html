@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MATTBEAR - WORD$LOTS! Mother's Day 2026</title>
+<meta name="theme-color" content="#b10d18">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WORD$LOTS">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="background-layer"></div>
+<div class="ambient-motion" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<canvas id="fxCanvas" aria-hidden="true"></canvas>
+<div id="partyCatOverlay" class="party-cat-overlay hidden" aria-hidden="true"><img src="assets/party-cat.gif" alt="Party Cat says Let's Party!"></div>
+<audio id="partyCatAudio" preload="auto" src="assets/sounds/paws-up.mp3"></audio>
+
+<section id="splash" class="splash" tabindex="0" aria-label="Start WORDSLOTS">
+  <div class="splash-inner">
+    <img src="assets/hero-wordslots.png" alt="WORD$LOTS Mother's Day Edition" class="splash-art">
+    <div class="splash-title">
+      <div class="title-premium">WORD$LOTS!</div>
+      <div class="title-script">Mother's Day Edition</div>
+      <div class="title-byline">by <span class="rainbow-word"><span>M</span><span>A</span><span>T</span><span>T</span><span>B</span><span>E</span><span>A</span><span>R</span></span></div>
+    </div>
+    <button class="start-button">CLICK ANYWHERE TO START</button>
+    <p class="legal-note">Free-play entertainment only. No real money, gambling, cash value, or prizes.</p>
+  </div>
+</section>
+
+<main class="app-shell">
+  <header class="hero-panel panel">
+    <section class="hero-copy">
+      <p class="eyebrow">Premium Free-Play Slot Experience</p>
+      <h1 class="site-title"><span class="wordmark">WORD$LOTS!</span><span class="edition">Mother's Day Edition</span><span class="byline">by <a class="rainbow-word" href="https://bearicide.github.io" target="_blank" rel="noopener"><span>M</span><span>A</span><span>T</span><span>T</span><span>B</span><span>E</span><span>A</span><span>R</span></a></span></h1>
+      <p class="hero-desc">A true 4×4 red-and-cream Mother’s Day slot with fixed paylines, visible wins, Sparkle Mode, Party Time, and the All Fall Down Hold & Win feature.</p>
+      <nav class="link-row" aria-label="MATTBEAR links">
+        <a href="https://bearicide.github.io" target="_blank" rel="noopener">Website</a>
+        <a href="https://soundcloud.com/mattbear86" target="_blank" rel="noopener">SoundCloud</a>
+        <a href="https://suno.com/@mattbear86" target="_blank" rel="noopener">Suno</a>
+        <a href="https://instagram.com/mattbearig" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/matt.baier.929285" target="_blank" rel="noopener">Facebook</a>
+        <a href="mailto:mattbear86@hotmail.com">Email</a>
+      </nav>
+      <div class="button-row">
+        <button id="rulesBtn">Rules</button>
+        <button id="linesBtn">Show Lines</button>
+        <button id="sparkleBtn">Sparkle Mode</button>
+        <button id="partyBtn" class="party-time-btn">PARTY TIME!</button>
+        <button id="installAppBtn" class="install-app-btn" type="button" hidden>Install App</button>
+      </div>
+    </section>
+
+    <aside class="hero-media">
+      <div class="hero-frame">
+        <img src="assets/hero-wordslots.png" alt="WORD$LOTS hero banner">
+      </div>
+    </aside>
+  </header>
+
+  <section class="instructions panel">
+    <b>How to play:</b> Pick a total bet and spin. The 12 fixed paylines evaluate left-to-right. Matching symbols must be adjacent on the same line. Random scattered matches do not pay. 2 matching symbols pay 2× line bet, 3 pay 50× line bet, and 4 pays the listed symbol award. AFD may stick during its active fall and can trigger Hold & Win when it reaches all four reels.
+    <div class="touch-help">Touch controls: tap the reel box to spin. Swipe the reel box left/right to change bet. Landscape mode is supported.</div>
+  </section>
+
+  <section class="machine-layout">
+    <aside class="pay-panel panel left-player-rail">
+      <section id="luckMeterRail" class="luck-meter-card" aria-live="polite">
+        <div class="luck-meter-head"><span>Luck Meter</span><b id="luckMeterLabel">Warming Up</b></div>
+        <div class="luck-meter-track"><i id="luckMeterFill"></i></div>
+        <p id="luckMeterNote">Luck now increases RTP with a capped boost. Losses charge it, wins drain it.</p>
+      </section>
+      <section class="left-spin-log-card" aria-live="polite">
+        <h2>Spin Log</h2>
+        <div id="spinLog" class="spin-log"></div>
+      </section>
+      <h2>Premium Pays</h2>
+      <div id="leftPayList"></div>
+    </aside>
+
+    <section class="machine-card panel">
+      <div class="meters">
+        <div><span>Balance</span><b id="balanceOut">$0.00</b></div>
+        <div><span>Total Bet</span><b id="betOut">$0.00</b></div>
+        <div><span>Line Bet</span><b id="lineBetOut">$0.00</b></div>
+        <div><span>Last Win</span><b id="lastWinOut">$0.00</b></div>
+      </div>
+      <div class="quick-reel-scale" aria-label="Quick reel scale control">
+        <label for="quickReelScale">Reel Scale</label>
+        <input id="quickReelScale" type="range" min="78" max="108" value="92" step="1">
+        <b id="quickReelScaleOut">92%</b>
+      </div>
+      <div id="reelsShell" class="reels-shell">
+        <canvas id="lineCanvas" aria-hidden="true"></canvas>
+        <div id="winBanner" class="win-banner hidden"></div>
+        <div id="grid" class="grid" aria-label="4 by 4 reel grid"></div>
+      </div>
+      <div class="controls">
+        <button id="betDown">− Bet</button>
+        <button id="spinBtn" class="spin-main">SPIN</button>
+        <button id="betUp">+ Bet</button>
+        <button id="maxBetBtn">Max</button>
+        <button id="autoBtn">Auto</button>
+      </div>
+      <div id="autoSettings" class="auto-settings" aria-label="Auto spin settings">
+        <label>Auto Spins
+          <select id="autoSpinCount">
+            <option value="10">10</option>
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="0">∞</option>
+          </select>
+        </label>
+        <label>Delay <input id="autoSpinDelay" type="range" min="250" max="1500" step="50" value="650"><b id="autoSpinDelayOut">650ms</b></label>
+        <label class="auto-check"><input id="autoStopOnWin" type="checkbox"> Stop On Win</label>
+        <label class="auto-check"><input id="autoStopOnFeature" type="checkbox" checked> Stop On Feature</label>
+      </div>
+      <div class="turbo-controls" aria-label="Turbo spin controls">
+        <span>Turbo Spin</span>
+        <button id="turbo10" type="button">10×</button>
+        <button id="turbo50" type="button">50×</button>
+        <button id="turbo100" type="button">100×</button>
+      </div>
+      <div id="message" class="message">Ready.</div>
+      <div id="batchSummary" class="batch-summary hidden" aria-live="polite"></div>
+    </section>
+
+    <aside class="pay-panel panel">
+      <h2>Specials</h2>
+      <div id="rightPayList"></div>
+      <div id="afdSpecialCard" class="special-card afd-special"><img src="assets/tile-afd.png" alt="All Fall Down special tile"><b>ALL FALL DOWN</b><span>Wild in line checks. Sticky during active fall. AFD on all four reels opens Hold & Win.</span></div>
+    </aside>
+  </section>
+
+  <section id="audioDockPanel" class="audio-dock-panel panel" aria-label="Music player and playlist">
+    <h2>Mini Player</h2>
+    <section class="mini-player" aria-label="Audio mini player">
+        <button id="audioToggle" class="audio-play" aria-label="Play or pause audio">▶</button>
+        <div class="track-info"><b>Mother’s Day Shine Loop</b><span>Web audio ambience</span></div>
+        <div class="wave-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <input id="volumeSlider" type="range" min="0" max="100" value="35" aria-label="Volume">
+        <label class="audio-upload hero-audio-upload">Add Songs<input id="audioUpload" type="file" accept="audio/*" multiple></label>
+        <audio id="userAudio" preload="auto"><source src="assets/sounds/mothers-day-groove.mp3" type="audio/mpeg"></audio>
+        <details class="playlist-panel compact-playlist" aria-label="Audio playlist queue">
+          <summary class="playlist-summary"><span>Queue</span><b id="playlistCount">0 songs</b></summary>
+          <div id="playlistQueue" class="playlist-queue">No songs queued.</div>
+          <div class="playlist-actions">
+            <button id="prevTrackBtn" type="button">Prev</button>
+            <button id="nextTrackBtn" type="button">Next</button>
+            <button id="clearPlaylistBtn" type="button">Clear</button>
+          </div>
+        </details>
+      </section>
+  </section>
+
+  <section class="lower-grid">
+    <article class="panel"><h2>12 Fixed Paylines</h2><div id="lineList" class="line-list"></div></article>
+    <article class="panel session-panel"><h2>Session Summary</h2><div id="sessionStats" class="session-stats"></div><button id="clearHistoryBtn" class="clear-history" type="button">Clear History</button></article>
+    <article class="panel"><h2>Full Paytable</h2><div id="fullPaytable" class="full-paytable"></div></article>
+  </section>
+
+  <footer class="footer panel">
+    <div><b>MATTBEAR - WORD$LOTS! Mother's Day 2026 - by <a class="rainbow-word" href="https://bearicide.github.io" target="_blank" rel="noopener"><span>M</span><span>A</span><span>T</span><span>T</span><span>B</span><span>E</span><span>A</span><span>R</span></a></b></div>
+    <p>Free-play portfolio game. No real money, gambling, cash value, or prizes. <a href="https://bearicide.github.io" target="_blank" rel="noopener">bearicide.github.io</a> · <a href="https://suno.com/@mattbear86" target="_blank" rel="noopener">suno.com/@mattbear86</a> · <a href="https://soundcloud.com/mattbear86" target="_blank" rel="noopener">SoundCloud</a> · <a href="https://instagram.com/mattbearig" target="_blank" rel="noopener">Instagram</a></p>
+  </footer>
+</main>
+
+<nav id="mobileQuickControls" class="mobile-quick-controls" aria-label="Mobile quick slot controls">
+  <button id="mobileBetDown" type="button">− Bet</button>
+  <button id="mobileSpin" class="mobile-spin" type="button">SPIN</button>
+  <button id="mobileBetUp" type="button">+ Bet</button>
+  <button id="mobileAuto" type="button">Auto</button>
+</nav>
+
+<section id="adminPanel" class="admin-panel panel hidden" aria-label="Hidden admin panel">
+  <button id="closeAdmin" class="close-admin" aria-label="Close admin">×</button>
+  <h2>Hidden Admin</h2>
+  <p class="admin-shortcut">Shortcut: CTRL + SHIFT + M</p><p class="admin-help">Every slider below includes a plain-English note. Tiny victory for not guessing what haunted machinery does.</p>
+  <details class="admin-details admin-defaults-note">
+    <summary>Defaults Side Note</summary>
+    <p class="admin-help">Quick reference only. These notes do not change math by themselves; the actual reset/default logic still lives in the app state.</p>
+    <div class="defaults-note-grid">
+      <section>
+        <h4>Runtime</h4>
+        <ul>
+          <li>Balance: <b>$10,000</b></li>
+          <li>Selected bet: <b>$10</b></li>
+          <li>Luck: <b>0%</b></li>
+          <li>Playlist queue: <b>7 preloaded songs</b></li>
+          <li>Sparkle / Lines / Party Time: <b>off by default</b></li>
+        </ul>
+      </section>
+      <section>
+        <h4>Economy</h4>
+        <ul>
+          <li>Global / Base / AFD / Hold RTP: <b>100%</b></li>
+          <li>Active paylines: <b>12</b></li>
+          <li>2-match: <b>2× line bet</b></li>
+          <li>3-match: <b>50× line bet</b></li>
+          <li>4-match multiplier: <b>100%</b></li>
+        </ul>
+      </section>
+      <section>
+        <h4>Luck</h4>
+        <ul>
+          <li>Luck Meter: <b>ON</b></li>
+          <li>Max RTP boost: <b>+18%</b></li>
+          <li>Loss gain: <b>+4 points</b></li>
+          <li>Win drain: <b>7 points scaled by win</b></li>
+          <li>Boost touches line wins, Hold & Win, and a small premium/AFD nudge.</li>
+        </ul>
+      </section>
+      <section>
+        <h4>AFD / Hold & Win</h4>
+        <ul>
+          <li>AFD enabled: <b>ON</b></li>
+          <li>AFD base chance: <b>1.2%</b></li>
+          <li>AFD passes: <b>2</b></li>
+          <li>AFD chance cap: <b>13%</b></li>
+          <li>Hold minimum award: <b>20× total bet</b></li>
+          <li>Starting respins: <b>3</b></li>
+        </ul>
+      </section>
+      <section>
+        <h4>Motion / FX</h4>
+        <ul>
+          <li>Spin length: <b>9 ticks</b></li>
+          <li>Spin speed: <b>75ms</b></li>
+          <li>Auto delay: <b>650ms</b></li>
+          <li>Stop on win: <b>OFF</b></li>
+          <li>Stop on feature: <b>ON</b></li>
+          <li>Win banner: <b>4.2s</b></li>
+        </ul>
+      </section>
+      <section>
+        <h4>Layout / Sound</h4>
+        <ul>
+          <li>Reel gap: <b>8px</b></li>
+          <li>Tile radius: <b>18px</b></li>
+          <li>Reel scale: <b>92%</b></li>
+          <li>Reel brightness: <b>85%</b></li>
+          <li>Mini-player volume: <b>30%</b></li>
+          <li>Game SFX volume: <b>72%</b></li>
+        </ul>
+      </section>
+    </div>
+    <p class="admin-reset-note"><b>Reset rule:</b> page exit / reload clears saved runtime values so the next launch starts from defaults.</p>
+  </details>
+
+  <div id="adminSliders" class="admin-sliders"></div>
+  <section class="admin-audio admin-details">
+    <h3>Audio Upload</h3>
+    <p id="adminAudioName">No songs queued.</p>
+    <label class="audio-upload admin-audio-upload">Add Songs<input id="adminAudioUpload" type="file" accept="audio/*" multiple></label>
+    <div class="admin-actions">
+      <button id="adminAudioPlay">Play / Pause Playlist</button>
+      <button id="adminPrevTrackBtn" type="button">Previous Track</button>
+      <button id="adminNextTrackBtn" type="button">Next Track</button>
+      <button id="clearAudioBtn">Clear Playlist</button>
+    </div>
+  </section>
+  <details class="admin-details">
+    <summary>Hold & Win Admin</summary>
+    <div class="admin-actions">
+      <button id="presetTight">Tight Preset</button>
+      <button id="presetStandard">Standard Preset</button>
+      <button id="presetGenerous">Generous Preset</button>
+      <button id="presetChaos">Chaos Preset</button>
+      <button id="forceAfdBtn">Test AFD Board</button>
+      <button id="forceBigWinBtn">Test Big Win</button>
+      <button id="forceHoldBtn">Open Hold & Win</button>
+      <button id="simulateBtn">Run 1,000 Spin Sim</button>
+      <button id="exportAdminBtn">Export JSON</button>
+      <button id="importAdminBtn">Import JSON</button>
+      <button id="resetSaveBtn">Reset Save</button>
+      <button id="showDefaultsBtn" type="button">Show Defaults</button>
+      <button id="resetAllDefaultsBtn" type="button">Reset All Defaults Now</button>
+    </div>
+    <pre id="adminReadout"></pre>
+  </details>
+  <details class="admin-details">
+    <summary>Hyper Spin Admin</summary>
+    <p class="admin-help">Hyper Spin runs silent bulk spins and returns a math summary. Admin only.</p>
+    <div class="admin-actions hyper-actions">
+      <button id="hyper1000" type="button">Hyper 1,000×</button>
+      <button id="hyper5000" type="button">Hyper 5,000×</button>
+    </div>
+  </details>
+</section>
+
+<section id="holdFeature" class="hold-feature hidden">
+  <div class="feature-card panel">
+    <h2>ALL FALL DOWN</h2>
+    <p id="featureStatus">Hold & Win</p>
+    <div id="featureGrid" class="feature-grid"></div>
+    <button id="featureSpinBtn">RESPIN</button>
+  </div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>

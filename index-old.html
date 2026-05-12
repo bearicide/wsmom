@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MATTBEAR - WORD$LOTS! Mother's Day Edition</title>
+<meta name="theme-color" content="#b10d18">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WORD$LOTS">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
+<style>
+:root{--red:#9e0710;--dark:#210002;--cream:#fff2cc;--gold:#f6cf72}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Segoe UI,Arial,sans-serif;background:#180001;color:var(--cream);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(35,0,0,.50),rgba(15,0,0,.88)),url("./assets/background-red-cream.png") center/cover no-repeat;z-index:-2}
+body:after{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 10%,rgba(255,240,170,.25),transparent 32%),radial-gradient(circle at 80% 40%,rgba(255,50,80,.18),transparent 30%);z-index:-1;pointer-events:none}
+.wrap{width:min(1180px,96vw);margin:auto;padding:18px 0 28px}
+.panel{border:1px solid rgba(255,225,150,.7);border-radius:24px;background:linear-gradient(180deg,rgba(130,8,16,.82),rgba(32,0,2,.9));box-shadow:0 20px 46px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.18);padding:16px}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;align-items:center}
+.hero img{width:100%;max-height:320px;object-fit:contain;filter:drop-shadow(0 18px 22px rgba(0,0,0,.45))}
+h1{font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(54px,9vw,130px);line-height:.85;margin:0;color:transparent;background:linear-gradient(#fff9d0,#f3c955 35%,#fff2b0 48%,#b71318 52%,#ffe88f);-webkit-background-clip:text;background-clip:text;-webkit-text-stroke:1.3px #4c0000;filter:drop-shadow(0 6px 0 #2b0000)}
+.subtitle{font-family:Georgia,serif;font-style:italic;font-size:clamp(26px,4vw,58px);margin:6px 0 8px;text-shadow:0 2px 0 #4d0000}
+.note{font-size:15px;line-height:1.4;color:#ffe9c0}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+button{cursor:pointer;border:1px solid rgba(255,235,160,.92);border-radius:16px;padding:12px 16px;background:linear-gradient(180deg,#fff3b5,#cb1a22 25%,#5a0005);color:white;font-weight:1000;text-transform:uppercase;text-shadow:0 1px 2px #000;box-shadow:0 8px 18px rgba(0,0,0,.32)}
+button.big{font-size:clamp(30px,5vw,58px);padding:16px 28px;border-radius:24px;width:100%;max-width:420px}
+.game{display:grid;grid-template-columns:220px minmax(320px,1fr) 220px;gap:12px;margin-top:14px}
+.reels{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:9px;aspect-ratio:1/1;padding:12px;border-radius:28px;background:linear-gradient(145deg,#ffeaa0,#ad0811 12%,#390003 80%,#f4c95e);box-shadow:inset 0 0 30px rgba(0,0,0,.75),0 20px 34px rgba(0,0,0,.35)}
+.tile{display:grid;place-items:center;border-radius:18px;background:linear-gradient(145deg,#fffbe6,#ffdcae);border:2px solid rgba(255,230,150,.9);box-shadow:inset 0 0 14px rgba(255,255,255,.65),0 7px 13px rgba(0,0,0,.3);overflow:hidden}
+.tile img{width:100%;height:100%;object-fit:contain}
+.meters{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.meters div,.pay div{padding:8px;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid rgba(255,226,143,.25);text-align:center}
+.meters span,.pay small{display:block;font-size:11px;text-transform:uppercase;color:#ffdca7;font-weight:900}
+.meters b{font-size:20px;color:#fff19b}
+.pay{display:grid;gap:7px}
+.pay h2,.audio h2{margin:0 0 8px;text-align:center;color:#ffe78f;font-family:Georgia,serif;font-style:italic}
+.pay img{width:42px;height:42px;object-fit:contain;background:#fff2cf;border-radius:10px;margin-right:6px;vertical-align:middle}
+.msg{margin-top:10px;text-align:center;font-weight:900;min-height:36px;padding:9px;border-radius:16px;background:rgba(0,0,0,.25)}
+.audio{margin-top:14px}
+.audio-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+audio{width:100%}
+.footer{text-align:center;margin-top:14px;font-size:13px;color:#ffe2be}
+.partycat{position:fixed;right:18px;bottom:18px;width:min(240px,45vw);display:none;z-index:20;border:2px solid #ffeaa0;border-radius:18px;background:rgba(0,0,0,.35);padding:6px;box-shadow:0 0 28px rgba(255,230,120,.5)}
+.party .partycat{display:block;animation:bob .45s steps(2,end) infinite}
+.party{animation:flash .22s steps(2,end) infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(2deg)}}
+@keyframes flash{50%{filter:hue-rotate(80deg) brightness(1.15)}}
+@media(max-width:850px){.hero,.game{grid-template-columns:1fr}.pay{grid-template-columns:repeat(2,1fr)}.meters{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.wrap{width:100%;padding:8px}.panel{border-radius:18px;padding:10px}.reels{gap:6px;padding:8px}.tile{border-radius:12px}.pay{grid-template-columns:1fr}.controls button{flex:1}.audio-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<img class="partycat" src="./assets/party-cat.gif" alt="Party Cat">
+<div class="wrap">
+  <section class="hero panel">
+    <div>
+      <h1>WORD$LOTS!</h1>
+      <div class="subtitle">Mother's Day Edition</div>
+      <p class="note">Free-play slot prototype by MATTBEAR. No real money, no gambling, no cash value, no prizes. Just pretty buttons and capitalism cosplay, apparently.</p>
+      <div class="controls">
+        <button id="partyBtn">Party Time</button>
+        <button id="sparkleBtn">Sparkle</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+    </div>
+    <img src="./assets/hero-wordslots.png" alt="WORD$LOTS Mother's Day hero">
+  </section>
+
+  <section class="game">
+    <aside class="pay panel">
+      <h2>Premium Pays</h2>
+      <div><img src="./assets/tile-afd.png"><b>AFD</b><small>Feature trigger</small></div>
+      <div><img src="./assets/tile-mom.png"><b>MOM</b><small>Top symbol</small></div>
+      <div><img src="./assets/tile-queen.png"><b>QUEEN</b><small>Royal bonus</small></div>
+      <div><img src="./assets/tile-crown.png"><b>CROWN</b><small>High pay</small></div>
+    </aside>
+
+    <main class="panel">
+      <div class="meters">
+        <div><span>Balance</span><b id="balance">$10,000</b></div>
+        <div><span>Bet</span><b id="bet">$10</b></div>
+        <div><span>Last Win</span><b id="lastWin">$0</b></div>
+        <div><span>Spins</span><b id="spins">0</b></div>
+      </div>
+      <div id="reels" class="reels" aria-label="Slot reels"></div>
+      <div class="controls">
+        <button id="betDown">− Bet</button>
+        <button id="spinBtn" class="big">SPIN</button>
+        <button id="betUp">+ Bet</button>
+      </div>
+      <div id="msg" class="msg">Ready.</div>
+    </main>
+
+    <aside class="pay panel">
+      <h2>Symbols</h2>
+      <div><img src="./assets/tile-diamond.png"><b>DIAMOND</b><small>High pay</small></div>
+      <div><img src="./assets/tile-cash.png"><b>CASH</b><small>Medium pay</small></div>
+      <div><img src="./assets/tile-heart.png"><b>HEART</b><small>Medium pay</small></div>
+      <div><img src="./assets/tile-call-mom.png"><b>CALL MOM</b><small>Bonus tease</small></div>
+    </aside>
+  </section>
+
+  <section class="audio panel">
+    <h2>Mini Player</h2>
+    <div class="audio-row">
+      <button id="prevSong">Prev</button>
+      <audio id="music" controls preload="metadata" src="./assets/sounds/mothers-day-groove.mp3"></audio>
+      <button id="nextSong">Next</button>
+    </div>
+  </section>
+
+  <footer class="footer panel">
+    MATTBEAR - WORD$LOTS! Mother's Day Edition · <a href="https://bearicide.github.io" style="color:#ffe78f">bearicide.github.io</a>
+  </footer>
+</div>
+
+<script>
+const symbols = [
+ "tile-afd.png","tile-mom.png","tile-queen.png","tile-crown.png","tile-diamond.png",
+ "tile-cash.png","tile-love.png","tile-heart.png","tile-call-mom.png","tile-perfume.png",
+ "tile-kiss.png","tile-card.png","tile-gift-box.png","tile-chocolates.png","tile-bouquet.png","tile-pearls.png"
+];
+const songs = [
+ "mothers-day-groove.mp3","lo-funk-instrumental.mp3","the-funk-of-doom.mp3","the-funk-of-doom-2.mp3",
+ "underwater-funk.mp3","underwater-funk-alt.mp3","whats-in-your-pocket-ooh-yeah.mp3"
+];
+let balance=10000, bet=10, spins=0, songIndex=0;
+const reels=document.getElementById("reels"), msg=document.getElementById("msg"), music=document.getElementById("music");
+function money(n){return "$"+Math.round(n).toLocaleString();}
+function drawGrid(arr=[]){
+ reels.innerHTML="";
+ for(let i=0;i<16;i++){
+   const s=arr[i]||symbols[Math.floor(Math.random()*symbols.length)];
+   const d=document.createElement("div");
+   d.className="tile";
+   d.innerHTML=`<img src="./assets/${s}" alt="${s.replace("tile-","").replace(".png","")}">`;
+   reels.appendChild(d);
+ }
+}
+function spin(){
+ if(balance<bet){msg.textContent="Not enough balance."; return;}
+ balance-=bet; spins++;
+ const arr=Array.from({length:16},()=>symbols[Math.floor(Math.random()*symbols.length)]);
+ drawGrid(arr);
+ let win=0;
+ const rows=[[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15]];
+ rows.forEach(r=>{
+   const vals=r.map(i=>arr[i]);
+   if(vals.every(v=>v===vals[0])){
+     win += vals[0]==="tile-afd.png" ? bet*100 : bet*25;
+   } else if(vals[0]===vals[1] && vals[1]===vals[2]) {
+     win += bet*8;
+   }
+ });
+ if(arr.filter(x=>x==="tile-afd.png").length>=4){win += bet*50; msg.textContent="ALL FALL DOWN feature tease!";}
+ else msg.textContent = win ? "Win: "+money(win) : "No win.";
+ balance+=win;
+ document.getElementById("balance").textContent=money(balance);
+ document.getElementById("bet").textContent=money(bet);
+ document.getElementById("lastWin").textContent=money(win);
+ document.getElementById("spins").textContent=spins;
+ const snd = new Audio(win ? "./assets/sounds/small-win.wav" : "./assets/sounds/no-win-soft.wav");
+ snd.volume=.35; snd.play().catch(()=>{});
+}
+document.getElementById("spinBtn").onclick=spin;
+document.getElementById("betUp").onclick=()=>{bet=Math.min(100,bet+10);document.getElementById("bet").textContent=money(bet);};
+document.getElementById("betDown").onclick=()=>{bet=Math.max(10,bet-10);document.getElementById("bet").textContent=money(bet);};
+document.getElementById("resetBtn").onclick=()=>{balance=10000;bet=10;spins=0;document.getElementById("balance").textContent=money(balance);document.getElementById("bet").textContent=money(bet);document.getElementById("lastWin").textContent="$0";document.getElementById("spins").textContent="0";drawGrid();msg.textContent="Reset.";};
+document.getElementById("partyBtn").onclick=()=>{document.body.classList.toggle("party"); new Audio("./assets/sounds/party-time-start.wav").play().catch(()=>{});};
+document.getElementById("sparkleBtn").onclick=()=>{new Audio("./assets/sounds/sparkle-mode.wav").play().catch(()=>{}); msg.textContent="Sparkle mode tickled. Tiny theater for the button goblins.";};
+document.getElementById("prevSong").onclick=()=>{songIndex=(songIndex+songs.length-1)%songs.length; music.src="./assets/sounds/"+songs[songIndex]; music.play().catch(()=>{});};
+document.getElementById("nextSong").onclick=()=>{songIndex=(songIndex+1)%songs.length; music.src="./assets/sounds/"+songs[songIndex]; music.play().catch(()=>{});};
+drawGrid();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{
+  "name": "MATTBEAR - WORD$LOTS! Mother's Day Edition",
+  "short_name": "WORD$LOTS",
+  "description": "Free-play Mother's Day slot prototype by MATTBEAR.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#180001",
+  "theme_color": "#b10d18",
+  "icons": [
+    {
+      "src": "./assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/icons/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./assets/icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play WORD$LOTS",
+      "short_name": "Play",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "./assets/icons/shortcut-home.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Party Time",
+      "short_name": "Party",
+      "url": "./index.html?party=1",
+      "icons": [
+        {
+          "src": "./assets/icons/shortcut-party.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

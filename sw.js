@@ -1,12 +1,8 @@
-const CACHE_NAME = "mattbear-wordslots-fixed-v2";
+const CACHE_NAME = "mattbear-wordslots-mom-v3-fun-pass";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
-  "./index-fixed.html",
   "./manifest.webmanifest",
-  "./assets/background-red-cream.png",
-  "./assets/hero-wordslots.png",
-  "./assets/party-cat.gif",
   "./assets/background-red-cream.png",
   "./assets/hero-wordslots.png",
   "./assets/party-cat.gif",
@@ -85,7 +81,7 @@ const FILES_TO_CACHE = [
   "./assets/sounds/turbo-spin-whoosh.wav"
 ];
 self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE)));
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll([...new Set(FILES_TO_CACHE)]).catch(err => console.warn("Cache warm skipped", err))));
   self.skipWaiting();
 });
 self.addEventListener("activate", event => {
@@ -93,5 +89,10 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 self.addEventListener("fetch", event => {
-  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request)));
+  if (event.request.method !== "GET") return;
+  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+    const copy = response.clone();
+    caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)).catch(() => {});
+    return response;
+  }).catch(() => cached)));
 });
